@@ -1,4 +1,5 @@
-# dev-web-front
+# e-comerce front.
+> Projeto da matéria Ciência da Computação unifacs 2019.2, criação de um e-comerce.
 
 ## Project setup
 ```
@@ -15,15 +16,16 @@ yarn run serve
 yarn run build
 ```
 
-### Run your tests
-```
-yarn run test
-```
-
 ### Lints and fixes files
 ```
 yarn run lint
 ```
+
+### fixes files
+```
+yarn run fix
+```
+
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
