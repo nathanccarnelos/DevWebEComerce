@@ -2,59 +2,53 @@
   <v-app>
     <v-app-bar
       app
-      color="primary"
+      color="deep-purple accent-4"
       dark
     >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
+    SHOPLATE
+    <v-spacer></v-spacer>
+    <v-menu
+      v-model="menu"
+      :close-on-content-click="false"
+      :nudge-width="200"
+      offset-y
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn small text v-on="on">
+          <v-icon small>mdi-account</v-icon> faça seu login
+        </v-btn>
+      </template>
+    <log-menu @close-menu="menu=false"></log-menu>
+    </v-menu>
+     <v-btn icon>
+        <v-icon>mdi-cart</v-icon>
       </v-btn>
     </v-app-bar>
-
     <v-content>
-      <HelloWorld/>
+  <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
-
+import LogMenu from './components/LogMenu.vue'
 export default {
   name: 'App',
 
   components: {
-    HelloWorld
+    LogMenu
   },
 
   data: () => ({
-    //
-  })
+    menu: false
+  }),
+  mounted () {
+    console.log('vai')
+  }
 }
 </script>
+<style scoped>
+.v-badge--overlap.v-badge--bottom .v-badge__badg {
+ bottom: 0;
+}
+</style>
