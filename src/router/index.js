@@ -17,6 +17,12 @@ const routes = [
     component: () => import('../views/RegisterUser.vue')
   },
   {
+    path: '/editUser',
+    alias: '/editUser',
+    name: 'editUser',
+    component: () => import('../views/EditUser.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     component: () => import('../views/About.vue')
