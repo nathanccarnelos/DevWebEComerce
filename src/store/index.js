@@ -6,7 +6,19 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLoged: false,
-    userInfo: {}
+    userInfo: {
+      name: '',
+      email: '',
+      phoneNumber: '',
+      address: {
+        cep: '',
+        neighborhood: '',
+        city: '',
+        street: '',
+        uf: '',
+        complement: ''
+      }
+    }
   },
   mutations: {
     changeIsLoged (state) {

@@ -6,7 +6,6 @@
     >
       <v-toolbar-title>{{isNewUser ? 'Criar Cadastro' : 'Editar Cadastro'}}</v-toolbar-title>
     </v-toolbar>
-    {{user}}
     <v-form
       ref="form"
       v-model="valid">
@@ -17,7 +16,7 @@
               :rules="nameRules"
               label="Nome Completo*"
               required
-              v-model="userForm.name"
+              v-model="user.name"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="3" sm="6">
@@ -25,7 +24,7 @@
               :rules="emailRules"
               label="E-mail*"
               required
-              v-model="userForm.email"
+              v-model="user.email"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="3" sm="6">
@@ -34,7 +33,7 @@
               label="Telefone*"
               required
               v-mask="phoneNumberMask"
-              v-model="userForm.phoneNumber"
+              v-model="user.phoneNumber"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -50,7 +49,7 @@
               placeholder="00000-000"
               required
               v-mask="'#####-###'"
-              v-model="userForm.address.cep"
+              v-model="user.address.cep"
             >
               <template v-slot:append-outer>
                 <v-btn @click.stop="searchCEP" icon>
@@ -62,7 +61,7 @@
           <v-col cols="12" md="3" sm="6">
             <v-text-field
               :loading="loadingFields"
-              :placeholder="userForm.address.city+ ' ' + userForm.address.uf"
+              :placeholder="user.address.city+ ' ' + user.address.uf"
               disabled
               label="Cidade*"
             >
@@ -71,7 +70,7 @@
           <v-col cols="12" md="3" sm="6">
             <v-text-field
               :loading="loadingFields"
-              :placeholder="userForm.address.neighborhood"
+              :placeholder="user.address.neighborhood"
               disabled
               label="Bairro*"
             >
@@ -80,7 +79,7 @@
           <v-col cols="12" md="3" sm="6">
             <v-text-field
               :loading="loadingFields"
-              :placeholder="userForm.address.street"
+              :placeholder="user.address.street"
               disabled
               label="Rua*"
             >
@@ -91,7 +90,7 @@
               :rules="[v => !!v || 'Complemento é requerido']"
               label="Complemento*"
               required
-              v-model="userForm.address.complement"
+              v-model="user.address.complement"
             >
             </v-text-field>
           </v-col>
@@ -100,7 +99,7 @@
     </v-form>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn :disabled="!valid" @click="createUser()" color="primary">Cadastrar</v-btn>
+      <v-btn :disabled="!valid" @click="createUser()" color="primary">{{isNewRegister ? 'Cadastrar' : 'Editar'}}</v-btn>
       <v-btn @click="closeMenu()" color="error">Cancelar</v-btn>
     </v-card-actions>
   </v-card>
@@ -108,6 +107,7 @@
 
 <script>
 import { mask } from 'vue-the-mask'
+import cloneDeep from 'lodash/cloneDeep'
 
 export default {
   directives: { mask },
@@ -127,20 +127,7 @@ export default {
       isNewUser: true,
       valid: true,
       phoneNumberMask: '(##)#####-####',
-      CEPforSearch: '',
-      user: {
-        name: '',
-        email: '',
-        phoneNumber: '',
-        address: {
-          cep: '',
-          neighborhood: '',
-          city: '',
-          street: '',
-          uf: '',
-          complement: ''
-        }
-      }
+      user: cloneDeep(this.userInfos)
     }
   },
   props: {
@@ -161,13 +148,19 @@ export default {
           }
         }
       }
+    },
+    isNewRegister: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {
     closeMenu () {
       this.$router.push({ name: 'home' })
     },
-    createUser () {},
+    createUser () {
+      this.$emit('ok-pressed', this.user)
+    },
     searchCEP () {
       this.loadingFields = true
       this.axios.get(`https://viacep.com.br/ws/${this.user.address.cep.replace('-', '')}/json/`)
@@ -188,11 +181,11 @@ export default {
           this.loadingFields = false
         })
     },
-    addressMapper (rawAddress) {
-      this.user.address.city = rawAddress.localidade
-      this.user.address.neighborhood = rawAddress.bairro
-      this.user.address.street = rawAddress.logradouro
-      this.user.address.uf = rawAddress.uf
+    addressMapper ({ localidade, bairro, logradouro, uf }) {
+      this.user.address.city = localidade
+      this.user.address.neighborhood = bairro
+      this.user.address.street = logradouro
+      this.user.address.uf = uf
     }
   }
 }
