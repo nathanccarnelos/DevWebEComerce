@@ -7,7 +7,7 @@
       <v-toolbar-title>Olá {{userInfo.name.split(' ')[0]}}</v-toolbar-title>
     </v-toolbar>
     <v-container>
-      <v-btn @click="$router.push({name: 'editUser'})">Editar meu cadastro</v-btn>
+      <v-btn block @click="$router.push({name: 'editUser'})">Editar meu cadastro</v-btn>
     </v-container>
     <v-card-actions>
       <v-spacer></v-spacer>

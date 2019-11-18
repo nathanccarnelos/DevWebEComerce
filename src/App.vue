@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar
         app
-        color="deep-purple accent-4"
+        color="deep-purple"
         dark
     >
       <v-toolbar-title>
