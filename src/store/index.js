@@ -18,7 +18,8 @@ export default new Vuex.Store({
         uf: '',
         complement: ''
       }
-    }
+    },
+    shoppingCart: []
   },
   mutations: {
     changeIsLogged (state, payload) {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     changeUserInfo (state, payload) {
       state.userInfo = payload
+    },
+    addToShoppingCartList (state, payload) {
+      state.shoppingCart = [...state.shoppingCart, payload]
     }
   },
   actions: {
@@ -34,6 +38,18 @@ export default new Vuex.Store({
     },
     changeUserInfo (context, payload) {
       context.commit('changeUserInfo', payload)
+    },
+    addToShoppingCartList (context, payload) {
+      if (context.state.shoppingCart.find((item) => {
+        return item.item.id === payload.item.id
+      })) {
+        return
+      }
+      let newItem = {
+        qtd: payload.qtd,
+        item: payload.item
+      }
+      context.commit('addToShoppingCartList', newItem)
     }
   }
 })

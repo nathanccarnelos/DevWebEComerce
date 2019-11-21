@@ -1,14 +1,14 @@
 <template>
   <v-row>
-    <v-col v-for="(item , i) in homeItens" :key="i" cols="12" lg="3" md="4" sm="6" xs="12">
+    <v-col :key="i" cols="12" lg="3" md="4" sm="6" v-for="(item , i) in homeItens" xs="12">
       <v-container fluid>
         <v-hover v-slot:default="{ hover }">
           <v-card
             class="mx-auto"
             color="grey lighten-4"
-            min-width="300"
-            min-height="400"
             max-height="400"
+            min-height="400"
+            min-width="300"
           >
             <v-img
               :aspect-ratio="16/9"
@@ -29,6 +29,7 @@
               style="position: relative;"
             >
               <v-btn
+                @click="addProductToCart(item)"
                 absolute
                 class="white--text"
                 color="teal"
@@ -93,6 +94,11 @@ export default {
           price: 29.99
         }
       ]
+    }
+  },
+  methods: {
+    addProductToCart (item) {
+      this.$store.dispatch('addToShoppingCartList', { qtd: 1, item })
     }
   }
 }
