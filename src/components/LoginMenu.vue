@@ -64,7 +64,7 @@ export default {
       this.$emit('close-menu')
     },
     login () {
-      this.$store.dispatch('changeIsLoged')
+      this.$store.dispatch('changeIsLogged', true)
       this.$store.dispatch('changeUserInfo', this.userinfoTESTE)
       this.closeMenu()
     }

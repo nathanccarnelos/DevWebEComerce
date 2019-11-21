@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    isLoged: false,
+    isLogged: false,
     userInfo: {
       name: '',
       email: '',
@@ -21,16 +21,16 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    changeIsLoged (state) {
-      state.isLoged = !state.isLoged
+    changeIsLogged (state, payload) {
+      state.isLogged = payload
     },
     changeUserInfo (state, payload) {
       state.userInfo = payload
     }
   },
   actions: {
-    changeIsLoged (context) {
-      context.commit('changeIsLoged')
+    changeIsLogged (context, payload) {
+      context.commit('changeIsLogged', payload)
     },
     changeUserInfo (context, payload) {
       context.commit('changeUserInfo', payload)

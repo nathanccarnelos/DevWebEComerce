@@ -18,11 +18,11 @@
         <template v-slot:activator="{ on }">
           <v-btn small text v-on="on">
             <v-icon small>mdi-account</v-icon>
-            {{isLoged ? 'olá ' + userName :'faça seu login'}}
+            {{isLogged ? 'olá ' + userName :'faça seu login'}}
           </v-btn>
         </template>
-        <login-menu @close-menu="menu=false" v-if="!isLoged"></login-menu>
-        <loged-menu v-else @close-menu="menu=false"></loged-menu>
+        <login-menu @close-menu="menu=false" v-if="!isLogged"></login-menu>
+        <logged-menu v-else @close-menu="menu=false"></logged-menu>
 
       </v-menu>
       <v-btn icon>
@@ -37,20 +37,20 @@
 
 <script>
 import LoginMenu from './components/LoginMenu.vue'
-import LogedMenu from './components/LogedMenu.vue'
+import LoggedMenu from './components/LoggedMenu.vue'
 
 export default {
   name: 'App',
   components: {
     LoginMenu,
-    LogedMenu
+    LoggedMenu
   },
   data: () => ({
     menu: false
   }),
   computed: {
-    isLoged () {
-      return this.$store.state.isLoged
+    isLogged () {
+      return this.$store.state.isLogged
     },
     userName () {
       return this.$store.state.userInfo.name.split(' ')[0]

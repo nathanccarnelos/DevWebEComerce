@@ -19,7 +19,7 @@ export default {
     }
   },
   mounted () {
-    if (!this.$store.state.isLoged) {
+    if (!this.$store.state.isLogged) {
       this.$router.push({ name: 'home' })
     }
   },

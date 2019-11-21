@@ -24,6 +24,7 @@ export default {
   },
   methods: {
     logout () {
+      this.$store.dispatch('changeIsLogged', false)
       this.$emit('close-menu')
     }
   },
