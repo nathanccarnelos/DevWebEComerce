@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    <notifications
+      group="addToCart"
+      position="bottom right"></notifications>
     <v-app-bar
       app
       color="deep-purple"
@@ -32,8 +35,8 @@
         <template v-slot:activator="{ on }">
           <v-badge
             color="green"
-            overlap
             left
+            overlap
           >
             <template v-slot:badge>
               <span v-if="shoppingCartCount > 0">{{ shoppingCartCount }}</span>

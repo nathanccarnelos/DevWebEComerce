@@ -23,15 +23,19 @@
           <v-list-item-subtitle>{{item.item.description}}</v-list-item-subtitle>
         </v-list-item-content>
 
-        <v-list-item-action>
-          <v-btn icon>
-            <v-icon color="grey lighten-1">mdi-information</v-icon>
+        <v-list-item-action style="display: inline-block">
+          <v-btn icon small>
+            <v-icon small>mdi-minus</v-icon>
+          </v-btn>
+          {{item.qtd}}
+          <v-btn icon small>
+            <v-icon small>mdi-plus</v-icon>
           </v-btn>
         </v-list-item-action>
       </v-list-item>
     </v-list>
     <v-card-actions>
-      <v-btn block color="">Fechar Pedido</v-btn>
+      <v-btn block>Fechar Pedido</v-btn>
     </v-card-actions>
   </v-card>
 </template>
