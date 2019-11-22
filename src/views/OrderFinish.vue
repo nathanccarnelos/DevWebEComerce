@@ -1,70 +1,85 @@
 <template>
-  <v-stepper v-model="e1">
+  <v-stepper v-model="step">
     <v-stepper-header>
       <v-spacer></v-spacer>
-      <v-stepper-step :complete="e1 > 1" step="1">Pedido</v-stepper-step>
+      <v-stepper-step :complete="step > 1" step="1">Pedido</v-stepper-step>
       <v-divider></v-divider>
-      <v-stepper-step :complete="e1 > 2" step="2">Entrega</v-stepper-step>
+      <v-stepper-step :complete="step > 2" step="2">Entrega</v-stepper-step>
       <v-divider></v-divider>
-      <v-stepper-step :complete="e1 > 3" step="3">Pagamento</v-stepper-step>
+      <v-stepper-step :complete="step > 3" step="3">Pagamento</v-stepper-step>
       <v-spacer></v-spacer>
     </v-stepper-header>
     <v-stepper-items>
       <v-stepper-content step="1">
         <v-card
           class="mb-12"
-          min-height="200px"
+          color="grey lighten-2"
         >
           <cart-list-itens></cart-list-itens>
-          <v-card-actions>
-          <v-btn
-            @click="e1 = 2"
-            color="primary"
-          >
-            Continue
-          </v-btn>
-          <v-btn text>Cancel</v-btn>
-          </v-card-actions>
         </v-card>
+        <v-btn
+          :disabled="shoppingCartCount < 1"
+          @click="step = 2"
+          color="primary"
+        >
+          Continuar
+        </v-btn>
+        <v-btn @click="$router.push({name:'home'})" text>Cancel</v-btn>
       </v-stepper-content>
-
       <v-stepper-content step="2">
         <v-card
           class="mb-12"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
-
+          color="grey lighten-2"
+        >
+          <v-container>
+            <v-row class="text-center"><v-col class="text-center title">Dados de Entrega</v-col></v-row>
+            <v-row><v-divider></v-divider></v-row>
+            <v-row>
+              <v-col class="text-center" xs="6">Nome: {{userInfo.name}}</v-col>
+              <v-col class="text-center" xs="6">Telefone: {{userInfo.phoneNumber}}</v-col>
+            </v-row>
+            <v-row>
+              <v-col class="text-center" xs="6">CEP: {{userInfo.address.cep}}</v-col>
+              <v-col class="text-center" xs="6">UF: {{userInfo.address.uf}}</v-col>
+            </v-row>
+            <v-row>
+              <v-col class="text-center" xs="6">Bairro: {{userInfo.address.neighborhood}}</v-col>
+              <v-col class="text-center" xs="6">Cidade: {{userInfo.address.city}}</v-col>
+            </v-row>
+            <v-row>
+              <v-col class="text-center" xs="6">Rua: {{userInfo.address.street}}</v-col>
+              <v-col class="text-center" xs="6">Complemento: {{userInfo.address.complement}}</v-col>
+            </v-row>
+          </v-container>
+        </v-card>
         <v-btn
-          @click="e1 = 3"
+          @click="step = 3"
           color="primary"
         >
           Continue
         </v-btn>
-
-        <v-btn text>Cancel</v-btn>
+        <v-btn @click="$router.push({name:'home'})" text>Cancel</v-btn>
       </v-stepper-content>
-
       <v-stepper-content step="3">
         <v-card
           class="mb-12"
           color="grey lighten-1"
-          height="200px"
-        ></v-card>
-
+        >
+          <v-container>
+            <v-row class="text-center"><v-col class="text-center title">Dados de Entrega</v-col></v-row>
+          </v-container>
+        </v-card>
         <v-btn
-          @click="e1 = 1"
+          @click="step = 1"
           color="primary"
         >
           Continue
         </v-btn>
-
         <v-btn text>Cancel</v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
 </template>
-
 <script>
 import CartListItens from '../components/CartListItens'
 
@@ -75,7 +90,18 @@ export default {
   },
   data () {
     return {
-      e1: 0
+      step: 0
+    }
+  },
+  computed: {
+    shoppingCart () {
+      return this.$store.state.shoppingCart
+    },
+    shoppingCartCount () {
+      return this.$store.state.shoppingCart.length
+    },
+    userInfo () {
+      return this.$store.state.userInfo
     }
   }
 }
