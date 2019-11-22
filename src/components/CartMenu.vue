@@ -24,11 +24,11 @@
         </v-list-item-content>
 
         <v-list-item-action style="display: inline-block">
-          <v-btn icon small>
+          <v-btn @click="reduceQtdInItem(item.item.id)" icon small>
             <v-icon small>mdi-minus</v-icon>
           </v-btn>
-          {{item.qtd}}
-          <v-btn icon small>
+          {{item.qtd || ''}}
+          <v-btn @click="addQtdInItem(item.item.id)" icon small>
             <v-icon small>mdi-plus</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -49,6 +49,14 @@ export default {
   computed: {
     shoppingCart () {
       return this.$store.state.shoppingCart
+    }
+  },
+  methods: {
+    addQtdInItem (id) {
+      this.$store.dispatch('addQtdShoppingCartItem', id)
+    },
+    reduceQtdInItem (id) {
+      this.$store.dispatch('removeQtdShoppingCartItem', id)
     }
   }
 }
