@@ -31,6 +31,7 @@
         :close-on-content-click="false"
         :nudge-width="400"
         offset-y
+        v-model="cartMenu"
       >
         <template v-slot:activator="{ on }">
           <v-badge
@@ -41,12 +42,12 @@
             <template v-slot:badge>
               <span v-if="shoppingCartCount > 0">{{ shoppingCartCount }}</span>
             </template>
-            <v-btn icon v-on="on">
+            <v-btn icon v-on="on" @click="cartMenu=true">
               <v-icon>mdi-cart</v-icon>
             </v-btn>
           </v-badge>
         </template>
-        <cart-menu></cart-menu>
+        <cart-menu @close-menu="cartMenu=false"></cart-menu>
       </v-menu>
     </v-app-bar>
     <v-content>

@@ -23,9 +23,9 @@ const routes = [
     component: () => import('../views/EditUser.vue')
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/About.vue')
+    path: '/orderFinish',
+    name: 'orderFinish',
+    component: () => import('../views/OrderFinish.vue')
   }
 ]
 
