@@ -15,7 +15,12 @@
           class="mb-12"
           color="grey lighten-2"
         >
-          <cart-list-itens></cart-list-itens>
+          <cart-list-itens v-if="shoppingCartCount >= 1"></cart-list-itens>
+          <v-row justify="center">
+            <v-col class="text-center">
+              <v-btn @click="$router.push({name:'home'})" color="primary">Voltar as compras</v-btn>
+            </v-col>
+          </v-row>
         </v-card>
         <v-btn
           :disabled="shoppingCartCount < 1"
@@ -32,8 +37,12 @@
           color="grey lighten-2"
         >
           <v-container>
-            <v-row class="text-center"><v-col class="text-center title">Dados de Entrega</v-col></v-row>
-            <v-row><v-divider></v-divider></v-row>
+            <v-row>
+              <v-col class="text-center title">Dados de Entrega</v-col>
+            </v-row>
+            <v-row>
+              <v-divider></v-divider>
+            </v-row>
             <v-row>
               <v-col class="text-center" xs="6">Nome: {{userInfo.name}}</v-col>
               <v-col class="text-center" xs="6">Telefone: {{userInfo.phoneNumber}}</v-col>
@@ -66,7 +75,12 @@
           color="grey lighten-1"
         >
           <v-container>
-            <v-row class="text-center"><v-col class="text-center title">Dados de Entrega</v-col></v-row>
+            <v-row class="text-center">
+              <v-col class="text-center title">Dados de Pagamento</v-col>
+            </v-row>
+            <v-row class="text-center ">
+              <v-divider></v-divider>
+            </v-row>
           </v-container>
         </v-card>
         <v-btn

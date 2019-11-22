@@ -48,7 +48,4 @@ export default {
 }
 </script>
 <style scoped>
-  .v-list-item{
-    border-bottom: rgba(168, 168, 168, 0.79) 1px solid;
-  }
 </style>
