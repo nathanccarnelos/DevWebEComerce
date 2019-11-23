@@ -92,6 +92,22 @@ export default new Vuex.Store({
         return
       }
       context.commit('removeQtdShoppingCartItem', key)
+    },
+    logout (context) {
+      context.commit('changeIsLogged', false)
+      context.commit('changeUserInfo', {
+        name: '',
+        email: '',
+        phoneNumber: '',
+        address: {
+          cep: '',
+          neighborhood: '',
+          city: '',
+          street: '',
+          uf: '',
+          complement: ''
+        }
+      })
     }
   }
 })

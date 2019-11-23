@@ -69,6 +69,7 @@
           </v-container>
         </v-card>
         <v-btn
+          :disabled="!isUserLogged"
           @click="step = 3"
           color="primary"
         >
@@ -83,19 +84,19 @@
         >
           <v-container>
             <v-row class="text-center">
-              <v-col class="text-center title">Dados de Pagamento</v-col>
+              <v-col class="text-center title">Metodos de Pagamento</v-col>
             </v-row>
-            <v-row class="text-center ">
+            <v-row class="text-center py-2">
               <v-divider></v-divider>
+            </v-row>
+            <v-row class="text-center py-2">
+              <v-btn block>Boleto</v-btn>
+            </v-row>
+            <v-row class="text-center py-2">
+              <v-btn block>cartão de credito</v-btn>
             </v-row>
           </v-container>
         </v-card>
-        <v-btn
-          @click="alert('compra')"
-          color="primary"
-        >
-          Comprar
-        </v-btn>
         <v-btn @click="step = 2" text>Cancel</v-btn>
       </v-stepper-content>
     </v-stepper-items>
