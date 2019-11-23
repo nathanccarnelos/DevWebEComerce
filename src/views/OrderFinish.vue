@@ -16,7 +16,7 @@
           color="grey lighten-2"
         >
           <cart-list-itens v-if="shoppingCartCount >= 1"></cart-list-itens>
-          <v-row justify="center">
+          <v-row justify="center" v-else>
             <v-col class="text-center">
               <v-btn @click="$router.push({name:'home'})" color="primary">Voltar as compras</v-btn>
             </v-col>
@@ -36,7 +36,7 @@
           class="mb-12"
           color="grey lighten-2"
         >
-          <v-container>
+          <v-container v-if="isUserLogged">
             <v-row>
               <v-col class="text-center title">Dados de Entrega</v-col>
             </v-row>
@@ -60,6 +60,13 @@
               <v-col class="text-center" xs="6">Complemento: {{userInfo.address.complement}}</v-col>
             </v-row>
           </v-container>
+          <v-container v-else>
+            <v-row align-content="center" justify="center">
+              <v-col class="text-center title">
+                Por favor faça o login
+              </v-col>
+            </v-row>
+          </v-container>
         </v-card>
         <v-btn
           @click="step = 3"
@@ -67,7 +74,7 @@
         >
           Continue
         </v-btn>
-        <v-btn @click="$router.push({name:'home'})" text>Cancel</v-btn>
+        <v-btn @click="step = 1" text>Cancel</v-btn>
       </v-stepper-content>
       <v-stepper-content step="3">
         <v-card
@@ -84,12 +91,12 @@
           </v-container>
         </v-card>
         <v-btn
-          @click="step = 1"
+          @click="alert('compra')"
           color="primary"
         >
-          Continue
+          Comprar
         </v-btn>
-        <v-btn text>Cancel</v-btn>
+        <v-btn @click="step = 2" text>Cancel</v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -116,6 +123,9 @@ export default {
     },
     userInfo () {
       return this.$store.state.userInfo
+    },
+    isUserLogged () {
+      return this.$store.state.isLogged
     }
   }
 }

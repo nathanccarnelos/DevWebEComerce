@@ -51,6 +51,14 @@ export default new Vuex.Store({
     changeUserInfo (context, payload) {
       context.commit('changeUserInfo', payload)
     },
+    async loginUser (context, { username, password }) {
+      console.log(username, password)
+      if (!username || !password) {
+        await Promise.reject(new Error('usuário ou senha incorretos.'))
+      }
+      this.dispatch('changeUserInfo', userTeste)
+      this.dispatch('changeIsLogged', true)
+    },
     addToShoppingCartList (context, payload) {
       if (context.state.shoppingCart.find((item) => {
         return item.item.id === payload.item.id
@@ -87,3 +95,17 @@ export default new Vuex.Store({
     }
   }
 })
+
+const userTeste = {
+  name: 'Nathan Carnelos',
+  email: 'nathancoltinho@gmail.com',
+  phoneNumber: '(71)99999-9999',
+  address: {
+    cep: '40000-000',
+    neighborhood: 'BairroTeste',
+    city: 'cidadeTeste',
+    street: 'ruaTeste',
+    uf: 'BA',
+    complement: 'Ap 01'
+  }
+}

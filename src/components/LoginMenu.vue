@@ -1,31 +1,31 @@
 <template>
   <v-card>
-      <v-form
+    <v-form
       ref="form"
       v-model="valid">
       <v-container>
-          <v-text-field
-            :rules="emailRules"
-            label="E-mail"
-            required
-            v-model="userForm.userName"
+        <v-text-field
+          :rules="emailRules"
+          label="E-mail"
+          required
+          v-model="userForm.username"
         ></v-text-field>
         <v-text-field
-            v-model="userForm.userPassWord"
-            :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-            :type="showPassword ? 'text' : 'password'"
-            :rules="[v => !!v || 'Campo requerido']"
-            label="Password"
-            @click:append="showPassword = !showPassword"
-          ></v-text-field>
-          <v-btn small text color="primary" @click="$router.push({name:'registerUser'})">Cliente novo? Cadastrar</v-btn>
-        </v-container>
-      </v-form>
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn @click="login()" :disabled="!valid" :dark="valid" color="teal">Entrar</v-btn>
-        <v-btn color="error" @click="closeMenu()">Cancelar</v-btn>
-      </v-card-actions>
+          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+          :rules="[v => !!v || 'Campo requerido']"
+          :type="showPassword ? 'text' : 'password'"
+          @click:append="showPassword = !showPassword"
+          label="Password"
+          v-model="userForm.password"
+        ></v-text-field>
+        <v-btn @click="$router.push({name:'registerUser'})" color="primary" small text>Cliente novo? Cadastrar</v-btn>
+      </v-container>
+    </v-form>
+    <v-card-actions>
+      <v-spacer></v-spacer>
+      <v-btn :dark="valid" :disabled="!valid" @click="login()" color="teal">Entrar</v-btn>
+      <v-btn @click="closeMenu()" color="error">Cancelar</v-btn>
+    </v-card-actions>
   </v-card>
 </template>
 
@@ -40,23 +40,10 @@ export default {
       ],
       valid: false,
       userForm: {
-        userName: '',
-        userPassWord: ''
+        username: '',
+        password: ''
       },
-      showPassword: false,
-      userinfoTESTE: {
-        name: 'Nathan Carnelos',
-        email: 'nathancoltinho@gmail.com',
-        phoneNumber: '(71)99999-9999',
-        address: {
-          cep: '40000-000',
-          neighborhood: 'BairroTeste',
-          city: 'cidadeTeste',
-          street: 'ruaTeste',
-          uf: 'BA',
-          complement: 'Ap 01'
-        }
-      }
+      showPassword: false
     }
   },
   methods: {
@@ -64,8 +51,7 @@ export default {
       this.$emit('close-menu')
     },
     login () {
-      this.$store.dispatch('changeIsLogged', true)
-      this.$store.dispatch('changeUserInfo', this.userinfoTESTE)
+      this.$store.dispatch('loginUser', this.userForm)
       this.closeMenu()
     }
   }
