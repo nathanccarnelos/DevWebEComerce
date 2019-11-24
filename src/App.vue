@@ -42,7 +42,7 @@
             <template v-slot:badge>
               <span v-if="shoppingCartCount > 0">{{ shoppingCartCount }}</span>
             </template>
-            <v-btn icon v-on="on" @click="cartMenu=true">
+            <v-btn @click="cartMenu=true" icon v-on="on">
               <v-icon>mdi-cart</v-icon>
             </v-btn>
           </v-badge>

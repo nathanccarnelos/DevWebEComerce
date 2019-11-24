@@ -29,7 +29,7 @@
         >
           Continuar
         </v-btn>
-        <v-btn @click="$router.push({name:'home'})" text>Cancel</v-btn>
+        <v-btn @click="$router.push({name:'home'})" color="error">Voltar</v-btn>
       </v-stepper-content>
       <v-stepper-content step="2">
         <v-card
@@ -75,7 +75,7 @@
         >
           Continue
         </v-btn>
-        <v-btn @click="step = 1" text>Cancel</v-btn>
+        <v-btn @click="step = 1" color="error">Cancel</v-btn>
       </v-stepper-content>
       <v-stepper-content step="3">
         <v-card
@@ -97,7 +97,7 @@
             </v-row>
           </v-container>
         </v-card>
-        <v-btn @click="step = 2" text>Cancel</v-btn>
+        <v-btn color="error" @click="step = 2" text>Voltar</v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
