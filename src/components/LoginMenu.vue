@@ -51,17 +51,7 @@ export default {
       this.$emit('close-menu')
     },
     login () {
-      this.axios.post('/api/login', {
-        email: this.userForm.username,
-        password: this.userForm.password
-      })
       this.$store.dispatch('loginUser', this.userForm)
-        .then(response => {
-          if (response.data.data.code === 200) {
-            // this.$store.dispatch('changeUserInfo', event)
-            this.$store.dispatch('changeIsLogged', true)
-          }
-        })
       this.closeMenu()
     }
   }

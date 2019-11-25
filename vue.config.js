@@ -7,7 +7,7 @@ module.exports = {
   devServer: {
     proxy: {
       '^/api': {
-        target: 'http://localhost:8000',
+        target: 'https://shielded-oasis-78348.herokuapp.com/public/',
         changeOrigin: true
       }
     }

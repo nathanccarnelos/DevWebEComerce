@@ -34,13 +34,15 @@ export default {
   },
   methods: {
     updateUser (event) {
+      console.log(event)
       this.axios.put(`/api/clients/update/${event.id}`, {
         'usuario_nome': event.name,
         'usuario_email': event.email,
         'usuario_phone': event.phoneNumber,
         'usuario_cep': event.address.cep,
         'usuario_cpf': event.cpf,
-        'usuario_adress_complement': event.address.complement
+        'usuario_adress_complement': event.address.complement,
+        'usuario_password': event.password
       }).then(response => {
         if (response.status === 200) {
           this.showError = false

@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import findIndex from 'lodash/findIndex'
+import { consoleError } from 'vuetify/lib/util/console'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -11,6 +13,7 @@ export default new Vuex.Store({
       name: '',
       email: '',
       phoneNumber: '',
+      cpf: '',
       address: {
         cep: '',
         neighborhood: '',
@@ -52,12 +55,36 @@ export default new Vuex.Store({
       context.commit('changeUserInfo', payload)
     },
     async loginUser (context, { username, password }) {
-      console.log(username, password)
       if (!username || !password) {
         await Promise.reject(new Error('usuário ou senha incorretos.'))
       }
-      this.dispatch('changeUserInfo', userTeste)
-      this.dispatch('changeIsLogged', true)
+      await axios.post('/api/clients/login', {
+        email: username,
+        password: password
+      })
+        .then(response => {
+          if (response.data.data.code === 200) {
+            let user = response.data.data.user
+            this.dispatch('changeUserInfo',
+              {
+                id: user.id,
+                name: user.nome,
+                email: user.email,
+                phoneNumber: user.phone,
+                cpf: user.cpf,
+                address: {
+                  cep: user.cep,
+                  neighborhood: '',
+                  city: '',
+                  street: '',
+                  uf: '',
+                  complement: user.adress_complement
+                }
+              })
+            this.dispatch('changeIsLogged', true)
+          }
+        })
+        .catch(() => consoleError('erro no login'))
     },
     addToShoppingCartList (context, payload) {
       if (context.state.shoppingCart.find((item) => {
@@ -111,17 +138,3 @@ export default new Vuex.Store({
     }
   }
 })
-
-const userTeste = {
-  name: 'Nathan Carnelos',
-  email: 'nathancoltinho@gmail.com',
-  phoneNumber: '(71)99999-9999',
-  address: {
-    cep: '40000-000',
-    neighborhood: 'BairroTeste',
-    city: 'cidadeTeste',
-    street: 'ruaTeste',
-    uf: 'BA',
-    complement: 'Ap 01'
-  }
-}

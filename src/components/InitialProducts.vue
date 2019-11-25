@@ -87,9 +87,9 @@ export default {
         return {
           id: item.id,
           title: item.nome,
-          price: item.price.toFixed(2),
+          price: item.price,
           category: item['category_id'],
-          img: item.img || '',
+          img: item.img === 'no-img' ? '' : item.img,
           itemCount: item['stock_count'] || 0
         }
       })

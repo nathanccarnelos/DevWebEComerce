@@ -9,65 +9,66 @@
       </v-toolbar>
       <v-container>
         <v-row>
-          <v-col cols="12" xs="12" sm="6">
+          <v-col cols="12" sm="6" xs="12">
             <v-text-field
-              v-model="formData.name"
-            label="Titulo"></v-text-field>
+              label="Titulo"
+              v-model="formData.name"></v-text-field>
           </v-col>
-          <v-col cols="12" xs="12" sm="6">
+          <v-col cols="12" sm="6" xs="12">
             <v-text-field
-              v-model="formData.stockCount"
-            label="Quantidade em estoque"></v-text-field>
+              label="Quantidade em estoque"
+              v-model="formData.stockCount"></v-text-field>
           </v-col>
-          <v-col cols="12" xs="12" sm="6">
+          <v-col cols="12" sm="6" xs="12">
             <v-text-field
-              v-model="formData.price"
-            label="Preço" prefix="R$" type="number" counter></v-text-field>
+              counter
+              label="Preço" prefix="R$" type="number" v-model="formData.price"></v-text-field>
           </v-col>
-          <v-col cols="12" xs="12" sm="6">
+          <v-col cols="12" sm="6" xs="12">
             <v-switch
-              v-model="formData.status"
-            label="Status"></v-switch>
+              label="Status"
+              v-model="formData.status"></v-switch>
           </v-col>
-          <v-col cols="12" xs="12" sm="6">
+          <v-col cols="12" sm="6" xs="12">
             <v-select
-              v-model="formData.categoryId"
               :items="categoryList"
+              :loading="categoryListLoading"
               item-text="name"
               item-value="id"
               label="categoria"
-              :loading="categoryListLoading"
+              v-model="formData.categoryId"
             ></v-select>
           </v-col>
-          <v-col cols="12" xs="12" sm="6">
+          <v-col cols="12" sm="6" xs="12">
             <v-select
-              v-model="formData.unityId"
               :items="unityList"
+              :loading="unityListLoading"
               item-text="name"
               item-value="id"
               label="unity"
-              :loading="unityListLoading"
+              v-model="formData.unityId"
             ></v-select>
           </v-col>
         </v-row>
         <v-row>
           <v-col cols="12" xs="12">
             <v-file-input
-              label="Imagem"
               accept="image/png, image/jpeg"
+              label="Imagem"
               v-model="formData.image"
             ></v-file-input>
           </v-col>
         </v-row>
       </v-container>
       <v-card-actions>
-        <v-btn color="primary" @click="sendProduct()">Enviar</v-btn>
+        <v-btn @click="sendProduct()" color="primary">Enviar</v-btn>
       </v-card-actions>
     </v-card>
   </v-container>
 </template>
 <script>
 import map from 'lodash/map'
+
 export default {
   name: 'AdministrationPage',
   data () {
@@ -129,8 +130,13 @@ export default {
         'unity_id': this.formData.unityId,
         'stock_count': this.formData.stockCount,
         'status': Number(this.formData.status),
-        'price': this.formData.price,
-        'image': this.formData.image
+        'price': this.formData.price
+      }).then(() => {
+        this.$notify({
+          group: 'addToCart',
+          title: 'Produto adicionado',
+          type: 'success'
+        })
       })
     }
   }

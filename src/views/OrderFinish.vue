@@ -71,11 +71,11 @@
         </v-card>
         <v-btn
           :disabled="!isUserLogged"
-          @click="step = 3"
+          @click="orderFinish()"
           color="primary"
           class="mx-2"
         >
-          Continue
+          Finalizar pedido
         </v-btn>
         <v-btn @click="step = 1" color="error">Voltar</v-btn>
       </v-stepper-content>
