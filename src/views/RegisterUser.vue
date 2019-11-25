@@ -29,7 +29,7 @@ export default {
         'usuario_cep': event.address.cep,
         'usuario_cpf': event.cpf,
         'usuario_adress_complement': event.address.complement,
-        'password': event.password
+        'usuario_password': event.password
       }).then(response => {
         if (response.data.data.status === 'Sucess') {
           this.showError = false
