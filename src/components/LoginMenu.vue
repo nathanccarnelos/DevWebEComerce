@@ -11,13 +11,13 @@
           v-model="userForm.username"
         ></v-text-field>
         <v-text-field
-          :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="[v => !!v || 'Campo requerido']"
-          :type="showPassword ? 'text' : 'password'"
-          @click:append="showPassword = !showPassword"
-          label="Password"
-          v-model="userForm.password"
-        ></v-text-field>
+        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+        :rules="[v => !!v || 'Campo requerido']"
+        :type="showPassword ? 'text' : 'password'"
+        @click:append="showPassword = !showPassword"
+        label="Password"
+        v-model="userForm.password"
+      ></v-text-field>
         <v-btn @click="$router.push({name:'registerUser'})" color="primary" small text>Cliente novo? Cadastrar</v-btn>
       </v-container>
     </v-form>
@@ -51,7 +51,17 @@ export default {
       this.$emit('close-menu')
     },
     login () {
+      this.axios.post('/api/login', {
+        email: this.userForm.username,
+        password: this.userForm.password
+      })
       this.$store.dispatch('loginUser', this.userForm)
+        .then(response => {
+          if (response.data.data.code === 200) {
+            // this.$store.dispatch('changeUserInfo', event)
+            this.$store.dispatch('changeIsLogged', true)
+          }
+        })
       this.closeMenu()
     }
   }

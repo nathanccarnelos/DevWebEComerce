@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <v-alert v-if="showError" type="error">Erro Ao tentar cadastrar.</v-alert>
     <user-form :isNewRegister="isNewRegister" @ok-pressed="createUser">
     </user-form>
   </v-container>
@@ -15,7 +16,8 @@ export default {
   },
   data () {
     return {
-      isNewRegister: true
+      isNewRegister: true,
+      showError: false
     }
   },
   methods: {
@@ -25,10 +27,24 @@ export default {
         'usuario_email': event.email,
         'usuario_phone': event.phoneNumber,
         'usuario_cep': event.address.cep,
-        'usuario_cpf': '9976423',
-        'usuario_adress_complement': event.address.complement
-      }).then()
-      this.$store.dispatch('changeUserInfo', event)
+        'usuario_cpf': event.cpf,
+        'usuario_adress_complement': event.address.complement,
+        'password': event.password
+      }).then(response => {
+        if (response.data.data.status === 'Sucess') {
+          this.showError = false
+          this.$notify({
+            group: 'UserSave',
+            title: 'Salvo com sucesso',
+            type: 'success'
+          })
+          this.$store.dispatch('changeUserInfo', event)
+          this.$store.dispatch('changeIsLogged', true)
+          this.$router.push({ name: 'home' })
+        }
+      }).catch(() => {
+        this.showError = true
+      })
     }
   }
 }

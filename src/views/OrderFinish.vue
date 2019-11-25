@@ -26,6 +26,7 @@
           :disabled="shoppingCartCount < 1"
           @click="step = 2"
           color="primary"
+          class="mx-2"
         >
           Continuar
         </v-btn>
@@ -72,10 +73,11 @@
           :disabled="!isUserLogged"
           @click="step = 3"
           color="primary"
+          class="mx-2"
         >
           Continue
         </v-btn>
-        <v-btn @click="step = 1" color="error">Cancel</v-btn>
+        <v-btn @click="step = 1" color="error">Voltar</v-btn>
       </v-stepper-content>
       <v-stepper-content step="3">
         <v-card
@@ -97,7 +99,7 @@
             </v-row>
           </v-container>
         </v-card>
-        <v-btn color="error" @click="step = 2" text>Voltar</v-btn>
+        <v-btn color="error" @click="step = 2">Voltar</v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>

@@ -3,6 +3,9 @@
     <notifications
       group="addToCart"
       position="bottom right"></notifications>
+    <notifications
+      group="UserSave"
+      position="top center"></notifications>
     <v-app-bar
       app
       color="deep-purple"

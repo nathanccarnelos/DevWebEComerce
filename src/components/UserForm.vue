@@ -21,6 +21,15 @@
           </v-col>
           <v-col cols="12" md="3" sm="6">
             <v-text-field
+              :rules="cpfRules"
+              label="CPF*"
+              required
+              v-mask="cpfMask"
+              v-model="user.cpf"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="3" sm="6">
+            <v-text-field
               :rules="emailRules"
               label="E-mail*"
               required
@@ -34,6 +43,13 @@
               required
               v-mask="phoneNumberMask"
               v-model="user.phoneNumber"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="3" sm="6">
+            <v-text-field
+              :rules="[v => !!v || 'Campo requerido']"
+              label="Senha"
+              v-model="user.password"
             ></v-text-field>
           </v-col>
         </v-row>
@@ -124,9 +140,13 @@ export default {
       nameRules: [
         v => !!v || 'Nome Completo é requerido'
       ],
+      cpfRules: [
+        v => !!v || 'CPF é requerido'
+      ],
       isNewUser: true,
       valid: true,
       phoneNumberMask: '(##)#####-####',
+      cpfMask: '###.###.###-##',
       user: cloneDeep(this.userInfos)
     }
   },
@@ -136,8 +156,10 @@ export default {
       default: () => {
         return {
           name: '',
+          cpf: '',
           email: '',
           phoneNumber: '',
+          password: '',
           address: {
             cep: '',
             neighborhood: '',

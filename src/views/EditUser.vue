@@ -1,5 +1,6 @@
 <template>
   <v-container>
+    <v-alert v-if="showError" type="error">Erro Ao tentar Editar.</v-alert>
     <user-form :userInfos="userInfo" @ok-pressed="updateUser" :isNewRegister="isNewRegister">
     </user-form>
   </v-container>
@@ -15,7 +16,8 @@ export default {
   },
   data () {
     return {
-      isNewRegister: false
+      isNewRegister: false,
+      showError: false
     }
   },
   mounted () {
@@ -27,15 +29,33 @@ export default {
     userInfo: {
       get () {
         return this.$store.state.userInfo
-      },
-      set (value) {
-        this.$store.dispatch('changeUserInfo', value)
       }
     }
   },
   methods: {
     updateUser (event) {
-      this.userInfo = event
+      this.axios.put(`/api/clients/update/${event.id}`, {
+        'usuario_nome': event.name,
+        'usuario_email': event.email,
+        'usuario_phone': event.phoneNumber,
+        'usuario_cep': event.address.cep,
+        'usuario_cpf': event.cpf,
+        'usuario_adress_complement': event.address.complement
+      }).then(response => {
+        if (response.status === 200) {
+          this.showError = false
+          this.$notify({
+            group: 'UserSave',
+            title: 'Salvo com sucesso',
+            type: 'success'
+          })
+          this.$store.dispatch('changeUserInfo', event)
+          this.$store.dispatch('changeIsLogged', true)
+          this.$router.push({ name: 'home' })
+        }
+      }).catch(() => {
+        this.showError = true
+      })
     }
   }
 

@@ -58,53 +58,19 @@
 </template>
 
 <script>
+import map from 'lodash/map'
 export default {
   name: 'InitialProducts',
   data () {
     return {
-      homeItens: [
-        {
-          id: 1,
-          img: 'https://portalcorreio.com.br/wp-content/uploads/2019/07/candy-lanchocolates-010319.jpg',
-          description: 'Cholate ao leite top, cremoso',
-          title: 'Chcolate ao leite',
-          price: 29.99,
-          onCart: false
-        },
-        {
-          id: 2,
-          img: 'https://http2.mlstatic.com/kit-2-barras-chocolate-ao-leite-garoto-21kg-atacado-D_NQ_NP_727514-MLB27593178639_062018-F.jpg',
-          description: 'Cholate meio amargo, metade da amargura de sua vida',
-          title: 'Chcolate meio amargo',
-          price: 29.99,
-          onCart: false
-        },
-        {
-          id: 3,
-          img: 'https://upload.wikimedia.org/wikipedia/commons/7/70/Chocolate_%28blue_background%29.jpg',
-          description: 'Chocolate duas cores, a dualidade que voce precisa',
-          title: 'Duas cores',
-          price: 29.99,
-          onCart: false
-        },
-        {
-          id: 4,
-          img: 'https://www.paodeacucar.com/img/uploads/1/345/606345.jpg',
-          description: 'O chocolate que tem o Talento que voce não tem',
-          title: 'Talentoso',
-          price: 29.99,
-          onCart: false
-        },
-        {
-          id: 5,
-          img: 'https://docemalu.vteximg.com.br/arquivos/ids/167526-1000-1000/108892-1.jpg?v=636018481493470000',
-          description: 'As bolinhas doces do capeta',
-          title: 'Bolinha',
-          price: 29.99,
-          onCart: false
-        }
-      ]
+      homeItens: []
     }
+  },
+  mounted () {
+    this.axios.get('/api/products')
+      .then(response => {
+        this.homeItens = this.hydrateProductsList(response.data.data)
+      })
   },
   methods: {
     addProductToCart (item) {
@@ -114,6 +80,18 @@ export default {
         group: 'addToCart',
         title: `${item.title} adicionado ao carrinho`,
         type: 'success'
+      })
+    },
+    hydrateProductsList (rawList) {
+      return map(rawList, (item) => {
+        return {
+          id: item.id,
+          title: item.nome,
+          price: item.price.toFixed(2),
+          category: item['category_id'],
+          img: item.img || '',
+          itemCount: item['stock_count'] || 0
+        }
       })
     }
   }
