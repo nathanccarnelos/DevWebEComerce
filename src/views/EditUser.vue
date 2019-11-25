@@ -35,7 +35,7 @@ export default {
   methods: {
     updateUser (event) {
       console.log(event)
-      this.axios.put(`/api/clients/update/${event.id}`, {
+      this.axios.put(`https://shielded-oasis-78348.herokuapp.com/public/api/clients/update/${event.id}`, {
         'usuario_nome': event.name,
         'usuario_email': event.email,
         'usuario_phone': event.phoneNumber,

@@ -67,7 +67,7 @@ export default {
     }
   },
   mounted () {
-    this.axios.get('/api/products')
+    this.axios.get('https://shielded-oasis-78348.herokuapp.com/public/api/products')
       .then(response => {
         this.homeItens = this.hydrateProductsList(response.data.data)
       })

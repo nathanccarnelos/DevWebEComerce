@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     createUser (event) {
-      this.axios.post('/api/clients/store', {
+      this.axios.post('https://shielded-oasis-78348.herokuapp.com/public/api/clients/store', {
         'usuario_nome': event.name,
         'usuario_email': event.email,
         'usuario_phone': event.phoneNumber,

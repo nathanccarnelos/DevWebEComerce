@@ -58,7 +58,7 @@ export default new Vuex.Store({
       if (!username || !password) {
         await Promise.reject(new Error('usuário ou senha incorretos.'))
       }
-      await axios.post('/api/clients/login', {
+      await axios.post('https://shielded-oasis-78348.herokuapp.com/public/api/clients/login', {
         email: username,
         password: password
       })

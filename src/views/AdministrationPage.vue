@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     getCategoryList () {
-      this.axios.get('/api/products_category')
+      this.axios.get('https://shielded-oasis-78348.herokuapp.com/public/api/products_category')
         .then(response => {
           this.categoryListLoading = true
           this.categoryList = map(response.data.data, ({ id, nome }) => {
@@ -109,7 +109,7 @@ export default {
         })
     },
     getUnityList () {
-      this.axios.get('/api/products_unity')
+      this.axios.get('https://shielded-oasis-78348.herokuapp.com/public/api/products_unity')
         .then(response => {
           this.unityListLoading = true
           this.unityList = map(response.data.data, ({ id, nome }) => {
@@ -124,7 +124,7 @@ export default {
         })
     },
     sendProduct () {
-      this.axios.post('/api/products/store', {
+      this.axios.post('https://shielded-oasis-78348.herokuapp.com/public/api/products/store', {
         'nome': this.formData.name,
         'category_id': this.formData.categoryId,
         'unity_id': this.formData.unityId,
