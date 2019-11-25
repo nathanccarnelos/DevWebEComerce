@@ -26,11 +26,11 @@
         </v-toolbar>
         <v-container>
           <v-text-field
-          label="Titulo">
+            label="Titulo">
           </v-text-field>
           <v-textarea
-            solo
             label="Mensagem"
+            solo
           ></v-textarea>
         </v-container>
         <v-card-actions>
@@ -85,7 +85,10 @@ export default {
       this.getProductList()
     },
     getProductList () {
-      // this.axios.get(`/api/purchase/`)
+      this.axios.get(`https://shielded-oasis-78348.herokuapp.com/public/api/purchase/clients/id=${this.userInfo.id}`)
+        .then(response => {
+          console.log(response.data)
+        })
     }
   },
   computed: {

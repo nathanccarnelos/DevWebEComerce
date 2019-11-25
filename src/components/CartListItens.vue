@@ -7,7 +7,6 @@
       <v-list-item-avatar>
         <v-img :src="item.item.img"></v-img>
       </v-list-item-avatar>
-
       <v-list-item-content>
         <v-list-item-title>{{item.item.title}}</v-list-item-title>
         <v-list-item-subtitle>{{item.item.description}}</v-list-item-subtitle>

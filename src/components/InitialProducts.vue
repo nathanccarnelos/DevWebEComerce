@@ -1,5 +1,16 @@
 <template>
-  <v-row>
+  <v-row align="center" justify="center"
+         v-if="loading">
+    <v-col class="text-center">
+      <v-progress-circular
+        :size="70"
+        :width="7"
+        color="purple"
+        indeterminate
+      ></v-progress-circular>
+    </v-col>
+  </v-row>
+  <v-row v-else>
     <v-col :key="i" cols="12" lg="3" md="4" sm="6" v-for="(item , i) in homeItens" xs="12">
       <v-container fluid>
         <v-hover v-slot:default="{ hover }">
@@ -59,18 +70,21 @@
 
 <script>
 import map from 'lodash/map'
+
 export default {
   name: 'InitialProducts',
   data () {
     return {
-      homeItens: []
+      homeItens: [],
+      loading: false
     }
   },
   mounted () {
+    this.loading = true
     this.axios.get('https://shielded-oasis-78348.herokuapp.com/public/api/products')
       .then(response => {
         this.homeItens = this.hydrateProductsList(response.data.data)
-      })
+      }).finally(() => { this.loading = false })
   },
   methods: {
     addProductToCart (item) {

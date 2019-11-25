@@ -25,8 +25,8 @@
         <v-btn
           :disabled="shoppingCartCount < 1"
           @click="step = 2"
-          color="primary"
           class="mx-2"
+          color="primary"
         >
           Continuar
         </v-btn>
@@ -72,8 +72,8 @@
         <v-btn
           :disabled="!isUserLogged"
           @click="orderFinish()"
-          color="primary"
           class="mx-2"
+          color="primary"
         >
           Finalizar pedido
         </v-btn>
@@ -99,13 +99,14 @@
             </v-row>
           </v-container>
         </v-card>
-        <v-btn color="error" @click="step = 2">Voltar</v-btn>
+        <v-btn @click="step = 2" color="error">Voltar</v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
 </template>
 <script>
 import CartListItens from '../components/CartListItens'
+import forEach from 'lodash/forEach'
 
 export default {
   name: 'OrderFinish',
@@ -129,6 +130,22 @@ export default {
     },
     isUserLogged () {
       return this.$store.state.isLogged
+    }
+  },
+  methods: {
+    orderFinish () {
+      forEach(this.shoppingCart, item => {
+        this.axios.post('https://shielded-oasis-78348.herokuapp.com/public/api/purchase/store', {
+          'prodcut_id': item.item.id,
+          'product_quant': item.qtd,
+          'quantity': item.qtd,
+          'client': this.userInfo.id,
+          'iscreditcard': 0,
+          'boleto_id': null,
+          'credit_card': null
+
+        }).then(() => { this.step = 3 })
+      })
     }
   }
 }
